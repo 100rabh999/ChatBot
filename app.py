@@ -20,12 +20,18 @@ def chatbot_response(user_input):
     input_text = vectorizer.transform([user_input])
     predicted_intent = best_model.predict(input_text)[0]
 
+    response = None
     for intent in intents['intents']:
         if intent['tag'] == predicted_intent:
             response = random.choice(intent['responses'])
             break
 
+    # If no matching intent is found, provide the fallback response
+    if response is None:
+        response = "That's a great question! While I don't have the answer readily available, I can point you in the right direction. Would you like me to provide contact information for the college office who may be able to assist you?"
+
     return response
+
 
 @app.route('/')
 def home():
