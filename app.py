@@ -32,10 +32,13 @@ def chatbot_response(user_input):
 
     return response
 
-
 @app.route('/')
-def home():
+def demo_website():
     return render_template('index.html')
+
+@app.route('/chatbot')
+def home():
+    return render_template('chatbot.html')
 
 @app.route('/chat', methods=['POST'])
 def chat():
