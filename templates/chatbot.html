@@ -1,30 +1,43 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>TCSC Chatbot</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
-<body>
+<body class="chatbot-body">
     <div class="container">
+        <button onclick="goToHomePage()">Back to Home</button>
+        <div id="robot-svg-container">
+            <img src="{{ url_for('static', filename='bot.jpeg') }}" style="width: 300px; height: 200px; " alt="Image">
+        </div>
+
         <h1>TCSC College Chatbot</h1>
+        
         <div id="chat-container">
             <div class="box">
                 <div class="message chatbot-message">
-                    <div class="message-content">
-                        <div class="message-text">Hi! I'm a chatbot. How can I assist you today?</div>
+                    <div class="message-content" id="chatbot-message-content">
+                        <div class="message-text">Hi! I am Your Ai Assistant. How can I assist you today?</div>
                     </div>
                 </div>
             </div>
         </div>
+        
         <form id="user-input-form">
             <div class="box">
-                <input type="text" id="user-input" placeholder="Type your message..." autofocus autocomplete="off">
-                <button type="submit" class="send-button">Send</button>
+                <input type="text" id="user-input" placeholder="Type your message..." autofocus autocomplete="on">
+                <button type="submit" class="send-button"><i class="fas fa-paper-plane"></i></button>
             </div>
         </form>
     </div>
 
     <script type="text/javascript">
+        function goToHomePage() {
+            window.location.href = '/';
+        }
+    
         $(document).ready(function() {
             $('form').on('submit', function(event) {
                 event.preventDefault();
@@ -59,6 +72,26 @@
                 $('#chat-container').scrollTop($('#chat-container')[0].scrollHeight);
             }
         });
+        $(document).ready(function() {
+
+            var originalText = "Hi! I am Your Ai Assistant. How can I assist you today?";
+            var currentIndex = 0;
+        
+            // Function to append text gradually
+            function appendTextGradually() {
+                var currentText = originalText.slice(0, currentIndex + 1);
+                $('#chatbot-message-content').text(currentText);
+        
+                if (currentIndex < originalText.length) {
+                    currentIndex++;
+                    setTimeout(appendTextGradually, 50);
+                }
+            }
+        
+            
+            appendTextGradually();
+        });
+        
     </script>
 </body>
 </html>

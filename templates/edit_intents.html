@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Intents</title>
+</head>
+<body>
+    <h1>Edit Intents</h1>
+    <button onclick="goToHomePage()">Back to Home</button>
+    <form method="POST" action="{{ url_for('edit_intents') }}">
+
+        <div>
+            <h3>New Tag</h3>
+            <label>Tag:</label>
+            <input type="text" name="new_tag" placeholder="Enter new tag">
+            <br>
+            <label>Patterns:</label>
+            <textarea name="new_patterns" rows="3" cols="50" placeholder="Enter patterns"></textarea>
+            <br>
+            <label>Responses:</label>
+            <textarea name="new_responses" rows="3" cols="50" placeholder="Enter responses"></textarea>
+            <br>
+            <button type="submit" name="action" value="add_new">Add New</button>
+            <hr>
+        </div>
+        {% for intent in intents %}
+            <div>
+                <h3>{{ intent.tag }}</h3>
+                <label>Patterns:</label>
+                <textarea name="patterns" rows="3" cols="50" placeholder="Enter patterns">{{ '\n'.join(intent.patterns) }}</textarea>
+                <br>
+                <label>Responses:</label>
+                <textarea name="responses" rows="3" cols="50" placeholder="Enter responses">{{ '\n'.join(intent.responses) }}</textarea>
+                <br>
+                <button type="submit" name="tag" value="{{ intent.tag }}">Update</button>
+                <hr>
+            </div>
+        {% endfor %}
+    </form>
+    <script>
+        function goToHomePage() {
+        window.location.href = '/';
+    }
+</script>
+</body>
+</html>

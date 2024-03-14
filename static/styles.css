@@ -1,6 +1,8 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
 }
 
 .container {
@@ -14,13 +16,14 @@ h1 {
     color: #333333;
 }
 
+/* Chat container styling (you can reuse or modify as needed) */
 #chat-container {
     background-color: #ffffff;
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 20px;
     overflow-y: scroll;
-    max-height: 300px;
+    max-height: 200px;
 }
 
 .message {
@@ -80,11 +83,78 @@ input[type="text"] {
     background-color: #29487D;
 }
 
-.box {
-    background-color: #ffffff;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 20px;
-    overflow-y: scroll;
-    max-height: 300px;
+
+nav {
+    background-color: #1017b6;
+    padding: 20px;
+}
+
+nav ul {
+    
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+nav a {
+    color: white;
+    text-decoration: none;
+}
+.custom-prev-icon, .custom-next-icon {
+    color: rgb(2, 0, 0); /* Customize the arrow color */
+    padding: 10px; /* Customize the padding */
+    border-radius: 50%; /* Make it circular */
+    font-size: 24px; /* Customize the font size */
+}
+
+.custom-prev-icon:hover, .custom-next-icon:hover {
+  
+    color: rgb(4, 0, 0); /* Customize the hover color */
+}
+#robot-svg-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chatbot-body {
+    padding-top: 5%;
+    background-image: url('bg.jpeg'); 
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+.section-content {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+.section-content.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.about-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.about-info {
+    flex: 1;
+    padding: 20px;
+}
+
+.about-image {
+    flex: 1;
+    padding: 20px;
+}
+
+.about-image img {
+    width: 100%;
+    height: auto;
 }
