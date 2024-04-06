@@ -58,7 +58,7 @@ def chatbot_response(user_input):
             break
 
     if response is None:
-        response = "That's a great question! While I don't have the answer readily available, I can point you in the right direction. Would you like me to provide contact information for the college office who may be able to assist you?"
+        response = "That's a great question! While I don't have the answer readily available, You can contact College office at Ground floor in college for your query."
 
     return response
 
@@ -88,16 +88,16 @@ def admin_login():
 @app.route('/chat', methods=['POST'])
 def chat():
     user_input = request.form['user_input']
+    print(user_input)
     response = chatbot_response(user_input)
     return response
-
-@app.route('/edit_intents', methods=['GET', 'POST'])
+@app.route('/edit_intents', methods=['GET', 'POST', 'PUT'])
 def edit_intents():
-    if request.method == 'POST':
-        action = request.form['action']
+    if request.method == 'POST' or request.method == 'PUT':
+        action = request.form.get('_method')
+
         
         if action == 'add_new':
-            
             new_tag = request.form['new_tag']
             new_patterns = request.form['new_patterns'].split('\n')
             new_responses = request.form['new_responses'].split('\n')
@@ -113,22 +113,20 @@ def edit_intents():
             return redirect(url_for('edit_intents'))
 
         elif action == 'update_existing':
-            # Update intents data based on form submission
-            tag_to_update = request.form['tag']
-            new_patterns = request.form['patterns'].split('\n')
-            new_responses = request.form['responses'].split('\n')
-
-            for intent in intents['intents']:
-                if intent['tag'] == tag_to_update:
-                    intent['patterns'] = new_patterns
-                    intent['responses'] = new_responses
+            num_intents = len(intents['intents'])
+            for i in range(num_intents):
+                tag = request.form.get(f'tag_{i+1}')
+                if tag:
+                    new_patterns = request.form.get(f'patterns_{i+1}').split('\n')
+                    new_responses = request.form.get(f'responses_{i+1}').split('\n')
+                    intents['intents'][i]['patterns'] = new_patterns
+                    intents['intents'][i]['responses'] = new_responses
                     save_intents_data()
                     train_chatbot_model()
 
                     return redirect(url_for('edit_intents'))
 
     return render_template('edit_intents.html', intents=intents['intents'])
-
 
 if __name__ == '__main__':
     app.run(debug=True)
